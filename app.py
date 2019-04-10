@@ -16,6 +16,8 @@ def api():
     access_token = access_key
     headers = {'Host':'api-ssl.bitly.com', 'Authorization':'Bearer '+access_token}
 
+
+
     #provides user information including the user's default group
     user_address = "https://api-ssl.bitly.com/v4/user"
     user_content = requests.get(user_address, headers=headers)
@@ -25,6 +27,7 @@ def api():
     #print(user_json)
 
     group_guid = user_json["default_group_guid"]
+
 
 
     #provides paged information about the Bitlinks for a provided group
@@ -37,6 +40,7 @@ def api():
     #print(bitlink_json)
 
     bitlink = bitlink_json["links"][0]["id"]
+
 
 
     #provides the number of user clicks, broken down by country, for a provided Bitlink
@@ -53,6 +57,8 @@ def api():
     n_metrics = len(country_json["metrics"])
     #print(n_metrics)
 
+
+
     #get total amount of clicks
     total_clicks = 0
     for i in range(0,n_metrics-1): 
@@ -65,12 +71,12 @@ def api():
         country = country_json["metrics"][j]["value"]
         click = country_json["metrics"][j]["clicks"]
         average_click[country] = click / total_clicks
-    print(average_click)
+    #print(average_click)
 
     average_dump = json.dumps(average_click)
     average_json = json.loads(average_dump)
 
-    print(average_json)
+    #print(average_json)
 
     return render_template('output.html', value=average_click)
 
