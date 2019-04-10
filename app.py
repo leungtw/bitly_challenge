@@ -11,7 +11,7 @@ def index():
 @app.route('/api', methods=['GET','POST'])
 def api():
     access_key = request.form['access_key'] #received from html form
-    print(access_key)
+    #print(access_key)
 
     access_token = access_key
     headers = {'Host':'api-ssl.bitly.com', 'Authorization':'Bearer '+access_token}
@@ -72,11 +72,6 @@ def api():
         click = country_json["metrics"][j]["clicks"]
         average_click[country] = click / total_clicks
     #print(average_click)
-
-    average_dump = json.dumps(average_click)
-    average_json = json.loads(average_dump)
-
-    #print(average_json)
 
     return render_template('output.html', value=average_click)
 
