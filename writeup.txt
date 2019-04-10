@@ -1,0 +1,7 @@
+Design Decisions
+    Language: Python, HTML, CSS
+    Framework: Flask
+When it comes to working with website and website requests, I only have experience implementing servers using Python and PHP. Python, especially through Flask, is very easy to integrate with HTML.
+
+Exposed Endpoints
+    The only exposed endpoint is the access key that is asked for on index.html.
