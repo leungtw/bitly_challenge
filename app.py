@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, flash, request
 import requests
+import json
 app = Flask(__name__)
 
 
@@ -67,8 +68,12 @@ def api():
         average_click[country] = click / total_clicks
     print(average_click)
 
+    average_dump = json.dumps(average_click)
+    average_json = json.loads(average_dump)
 
-    return render_template('index.html')
+    print(average_json)
+
+    return render_template('output.html', value=average_json)
 
 if __name__ == '__main__':
     app.run()
