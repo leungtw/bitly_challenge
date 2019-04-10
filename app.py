@@ -13,7 +13,7 @@ def api():
     access_key = request.form['access_key'] #received from html form
     #print(access_key)
 
-    access_token = 'a9de8862e25eaacccd9095bbf920ba8f47c8269a'
+    access_token = access_key
     headers = {'Host':'api-ssl.bitly.com', 'Authorization':'Bearer '+access_token}
 
 
