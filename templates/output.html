@@ -22,13 +22,15 @@
         </div>
         <div id="item2">
             <h1>Average Clicks Per Country</h1>
-            
-            <script>
-                
-            </script>
+
+            {%for key, val in value.items()%}
+                <div>
+                    <strong>{{key}}</strong> {{val}}
+                </div>
+            {% endfor %}
 
             <form action="/">
-                <input type="submit" value="Different Access Key" />
+                <input type="submit" style="margin-top:15px;" value="Different Access Key" />
             </form>
               
 

@@ -10,11 +10,10 @@ def index():
 
 @app.route('/api', methods=['GET','POST'])
 def api():
-    access_key = request.form['access_key']
+    access_key = request.form['access_key'] #received from html form
     print(access_key)
 
-    access_token = "a9de8862e25eaacccd9095bbf920ba8f47c8269a"
-
+    access_token = access_key
     headers = {'Host':'api-ssl.bitly.com', 'Authorization':'Bearer '+access_token}
 
     #provides user information including the user's default group
@@ -73,7 +72,7 @@ def api():
 
     print(average_json)
 
-    return render_template('output.html', value=average_json)
+    return render_template('output.html', value=average_click)
 
 if __name__ == '__main__':
     app.run()
