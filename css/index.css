@@ -1,0 +1,51 @@
+body {
+    font-family:QuickSand;
+    color: #515151;
+}
+
+.logo {
+    object-fit: cover;
+    width:50%;
+}
+
+.grid-container {
+    position: fixed;
+    top:10%;
+    left:20%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 10px;
+}
+
+#item1 {
+    text-align:center;
+    border-right: 1px solid #e8e8e8;
+}
+
+#item2 {
+    padding-left:10px;
+}
+
+h3 {
+    font-weight:normal;
+}
+
+/*FONTS*/
+@font-face {
+    font-family: QuickSand;
+      src: url(../font/Quicksand_Book.otf);
+      font-weight: normal;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: 'QuickSand';
+      src: url(../font/Quicksand_Bold.otf);
+      font-weight: bold;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: 'BoldFont';
+      src: url(../font/TheBoldFont.ttf);
+  }
