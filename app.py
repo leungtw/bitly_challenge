@@ -48,7 +48,7 @@ def api():
 
 
     #provides the number of user clicks, broken down by country, for a provided Bitlink
-    country_param = {"unit": "day", "units":-1}
+    country_param = {"unit": "day", "units":30} #specify past 30 days
     country_dic = {}
     total_clicks = 0
 
@@ -64,13 +64,13 @@ def api():
         for i in range(0,n_metrics): 
             #print(country_json["metrics"][i]["clicks"])
             total_clicks = total_clicks + country_json["metrics"][i]["clicks"]
+            country = country_json["metrics"][i]["value"]
+            click = country_json["metrics"][i]["clicks"]
 
-            if country_json["metrics"][i]["value"] not in country_dic:
-                country = country_json["metrics"][i]["value"]
-                click = country_json["metrics"][i]["clicks"]
+            if country not in country_dic:
                 country_dic[country] = click
             else:
-                country_dic[country] += country_json["metrics"][i]["clicks"]
+                country_dic[country] += click
 
     """
     print(country_dic)
@@ -78,7 +78,7 @@ def api():
     country_json = country_content.json()
     print("country ",country_json)
     """
-
+    print(country_dic)
     #associate average with respective country
     average_click = {}
     for key, val in country_dic.items():
