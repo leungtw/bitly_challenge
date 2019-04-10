@@ -11,7 +11,7 @@ Additional Python Packages:
         pip install requests
 
 Run Code with Command:
-python3 server.py
+python3 app.py
 
 Host:
 http://127.0.0.1:5000/
