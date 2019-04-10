@@ -13,7 +13,7 @@ def api():
     access_key = request.form['access_key'] #received from html form
     #print(access_key)
 
-    access_token = access_key
+    access_token = 'a9de8862e25eaacccd9095bbf920ba8f47c8269a'
     headers = {'Host':'api-ssl.bitly.com', 'Authorization':'Bearer '+access_token}
 
 
@@ -31,45 +31,59 @@ def api():
 
 
     #provides paged information about the Bitlinks for a provided group
+    #retrieve all the bitlinks
     bitlink_param = {"size": 50}
     bitlink_address = "https://api-ssl.bitly.com/v4/groups/"+group_guid+"/bitlinks"
     bitlink_content = requests.get(bitlink_address, headers=headers, params=bitlink_param)
 
     print(bitlink_content.status_code)
     bitlink_json = bitlink_content.json()
-    #print(bitlink_json)
+    print("pagination ",bitlink_json)
 
-    bitlink = bitlink_json["links"][0]["id"]
-
+    n_bitlinks = len(bitlink_json["links"])
+    bitlinks = []
+    for x in range(0,n_bitlinks): 
+        bitlinks.append(bitlink_json["links"][x]["id"])
+    print(bitlinks)
 
 
     #provides the number of user clicks, broken down by country, for a provided Bitlink
     country_param = {"unit": "day", "units":-1}
-    n_clicks = 0
+    country_dic = {}
+    total_clicks = 0
 
-    country_address = "https://api-ssl.bitly.com/v4/bitlinks/"+bitlink+"/countries"
-    country_content = requests.get(country_address, headers=headers, params=country_param)
+    for x in range(0,n_bitlinks): 
+        country_address = "https://api-ssl.bitly.com/v4/bitlinks/"+bitlinks[x]+"/countries"
+        country_content = requests.get(country_address, headers=headers, params=country_param)
+        country_json = country_content.json()
+        print("*",country_json)
 
+        n_metrics = len(country_json["metrics"])
+        print(n_metrics)
+
+        for i in range(0,n_metrics): 
+            #print(country_json["metrics"][i]["clicks"])
+            total_clicks = total_clicks + country_json["metrics"][i]["clicks"]
+
+            if country_json["metrics"][i]["value"] not in country_dic:
+                country = country_json["metrics"][i]["value"]
+                click = country_json["metrics"][i]["clicks"]
+                country_dic[country] = click
+            else:
+                country_dic[country] += country_json["metrics"][i]["clicks"]
+
+    """
+    print(country_dic)
     print(country_content.status_code)
     country_json = country_content.json()
-    #print(country_json)
-
-    n_metrics = len(country_json["metrics"])
-    #print(n_metrics)
-
-
-
-    #get total amount of clicks
-    total_clicks = 0
-    for i in range(0,n_metrics-1): 
-        #print(country_json["metrics"][i]["clicks"])
-        total_clicks = total_clicks + country_json["metrics"][i]["clicks"]
+    print("country ",country_json)
+    """
 
     #associate average with respective country
     average_click = {}
-    for j in range(0,n_metrics):
-        country = country_json["metrics"][j]["value"]
-        click = country_json["metrics"][j]["clicks"]
+    for key, val in country_dic.items():
+        country = key
+        click = val
         average_click[country] = click / total_clicks
     #print(average_click)
 
