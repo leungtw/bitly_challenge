@@ -40,15 +40,25 @@ def api():
     bitlink_json = bitlink_content.json()
     print("pagination ",bitlink_json)
 
-    n_bitlinks = len(bitlink_json["links"])
+    n_bitlinks = request.form['n_links']
+    if n_bitlinks == 0:
+        n_bitlinks = len(bitlink_json["links"])
+
+    n_bitlinks = int(n_bitlinks)
+
     bitlinks = []
     for x in range(0,n_bitlinks): 
         bitlinks.append(bitlink_json["links"][x]["id"])
     print(bitlinks)
 
 
+    n_days = request.form['n_days'] #received from html form
+
+    if n_days == 0:
+        n_days = 30
+
     #provides the number of user clicks, broken down by country, for a provided Bitlink
-    country_param = {"unit": "day", "units":30} #specify past 30 days
+    country_param = {"unit": "day", "units":n_days} #specify past 30 days
     country_dic = {}
     total_clicks = 0
 
